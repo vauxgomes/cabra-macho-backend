@@ -7,6 +7,7 @@ exports.up = function (knex) {
         table.integer("corral_id").notNullable();
         table.foreign("corral_id").references("corrals.id").onDelete("CASCADE");
 
+        table.string("code", 255).unique().notNullable();
         table.string("breed", 255).notNullable();
         table.string("food", 255).notNullable();
         table.timestamp("birth");
