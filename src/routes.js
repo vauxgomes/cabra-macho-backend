@@ -9,6 +9,7 @@ const AccountsController = require("./controllers/AccountsController");
 const UserController = require("./controllers/UserController");
 const CorralController = require("./controllers/CorralController");
 const AnimalController = require("./controllers/AnimalController");
+const VaccineController = require("./controllers/VaccineController");
 
 // // Accounts
 routes.post("/login", AccountsController.register);
@@ -33,6 +34,10 @@ routes.get("/corrals/:corral_id/animals/:id", auth, AnimalController.show);
 routes.post("/corrals/:corral_id/animals/", auth, AnimalController.create);
 routes.put("/corrals/:corral_id/animals/:id", auth, AnimalController.update);
 routes.delete("/corrals/:corral_id/animals/:id", auth, AnimalController.delete);
+
+// Vaccines
+routes.post("/animals/:animal_id/vaccines/", auth, VaccineController.create);
+routes.delete("/animals/:animal_id/vaccines/:id", auth, VaccineController.delete);
 
 // Export
 module.exports = routes;

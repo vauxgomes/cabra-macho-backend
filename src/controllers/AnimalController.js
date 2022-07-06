@@ -46,6 +46,13 @@ module.exports = {
             .andWhere("animals.id", id)
             .first();
 
+        const vaccines = await knex
+            .select("id", "name", "code", "created_at")
+            .from("vaccines")
+            .where({ animal_id: id });
+
+        animal["vaccines"] = vaccines;
+
         return res.json(animal);
     },
 
