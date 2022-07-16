@@ -36,6 +36,7 @@ routes.put("/corrals/:corral_id/animals/:id", auth, AnimalController.update);
 routes.delete("/corrals/:corral_id/animals/:id", auth, AnimalController.delete);
 
 // Vaccines
+routes.get("/animals/:animal_id/vaccines/", auth, VaccineController.index);
 routes.post("/animals/:animal_id/vaccines/", auth, VaccineController.create);
 routes.delete("/animals/:animal_id/vaccines/:id", auth, VaccineController.delete);
 

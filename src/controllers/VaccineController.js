@@ -2,6 +2,21 @@ const knex = require("../database");
 
 // Controller
 module.exports = {
+    // Index
+    async index(req, res) {
+        const { id: user_id } = req.user;
+        const { animal_id } = req.params;
+
+        const vaccines = await knex
+            .select("vaccines.id", "vaccines.name", "vaccines.code")
+            .from("vaccines")
+            .innerJoin("animals", "vaccines.animal_id", "animals.id")
+            .innerJoin("corrals", "animals.corral_id", "corrals.id")
+            .where({ user_id, animal_id });
+
+        return res.json(vaccines);
+    },
+
     // Create
     async create(req, res) {
         try {
@@ -17,12 +32,12 @@ module.exports = {
 
             if (animal) {
                 const { name, code } = req.body;
-                
-                const [id] = await knex('vaccines').insert({
+
+                const [id] = await knex("vaccines").insert({
                     animal_id,
                     name,
-                    code
-                })
+                    code,
+                });
 
                 return res.json({ id });
             } else {
@@ -41,7 +56,7 @@ module.exports = {
         }
     },
 
-    // DELETE
+    // Delete
     async delete(req, res) {
         const { id: user_id } = req.user;
         const { animal_id } = req.params;
@@ -56,7 +71,7 @@ module.exports = {
                 .first();
 
             if (animal) {
-                await knex("vaccines").where({ id, animal_id}).del();
+                await knex("vaccines").where({ id, animal_id }).del();
 
                 return res.status(200).send({
                     success: true,
