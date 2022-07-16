@@ -1,0 +1,12 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+authors:
+  - family-names: Nunes
+    given-names: Abrahão Lucas Barboza
+  - family-names: Gomes
+    given-names: Vaux Sandino Diniz
+    orcid: https://orcid.org/0000-0001-7672-0643
+    website: http://vauxgomes.github.io
+title: "Modelo de gerência e controle de animais"
+version: 1.0.0
+date-released: 2022-08-01
