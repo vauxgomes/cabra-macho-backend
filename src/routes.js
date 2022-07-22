@@ -35,6 +35,9 @@ routes.post("/corrals/:corral_id/animals/", auth, AnimalController.create);
 routes.put("/corrals/:corral_id/animals/:id", auth, AnimalController.update);
 routes.delete("/corrals/:corral_id/animals/:id", auth, AnimalController.delete);
 
+// Animal Scanner Routes
+routes.get("/animals/by/code/:code", auth, AnimalController.showByCode);
+
 // Vaccines
 routes.get("/animals/:animal_id/vaccines/", auth, VaccineController.index);
 routes.post("/animals/:animal_id/vaccines/", auth, VaccineController.create);

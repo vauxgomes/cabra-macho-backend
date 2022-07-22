@@ -53,7 +53,70 @@ module.exports = {
       .from("vaccines")
       .where({ animal_id: id });
 
-    animal['vaccines'] = vaccines
+    animal["vaccines"] = vaccines;
+
+    return res.json(animal);
+  },
+
+  // Show
+  async show(req, res) {
+    const { id: user_id } = req.user;
+    const { corral_id } = req.params;
+    const { id } = req.params;
+
+    const animal = await knex
+      .select(
+        "animals.id",
+        "code",
+        "breed",
+        "food",
+        "birth",
+        "corral_id",
+        "corrals.name as corral_name"
+      )
+      .from("animals")
+      .innerJoin("corrals", "animals.corral_id", "corrals.id")
+      .innerJoin("users", "corrals.user_id", "users.id")
+      .where({ user_id, corral_id })
+      .andWhere("animals.id", id)
+      .first();
+
+    const vaccines = await knex
+      .select("id", "name", "code", "created_at")
+      .from("vaccines")
+      .where({ animal_id: id });
+
+    animal["vaccines"] = vaccines;
+
+    return res.json(animal);
+  },
+
+  // Show By Code
+  async showByCode(req, res) {
+    const { id: user_id } = req.user;
+    const { code } = req.params;
+
+    const animal = await knex
+      .select(
+        "animals.id",
+        "code",
+        "breed",
+        "food",
+        "birth",
+        "corral_id",
+        "corrals.name as corral_name"
+      )
+      .from("animals")
+      .innerJoin("corrals", "animals.corral_id", "corrals.id")
+      .where({ code, "corrals.user_id": user_id })
+      .first();
+
+    const vaccines = await knex
+      .select("id", "name", "code", "created_at")
+      .from("vaccines")
+      .where({ animal_id: animal.id });
+
+    animal["vaccines"] = vaccines;
 
     return res.json(animal);
   },
